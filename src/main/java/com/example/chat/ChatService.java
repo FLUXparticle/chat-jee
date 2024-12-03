@@ -16,6 +16,9 @@ public class ChatService {
     @Inject
     private Event<ChatMessageEvent> chatEvent;
 
+    @Inject
+    private ChatLogger chatLogger;
+
     /**
      * Sendet eine Nachricht als Event und loggt sie.
      *
@@ -25,6 +28,7 @@ public class ChatService {
     public void sendMessage(String message, String sender) {
         ChatMessageEvent event = new ChatMessageEvent(message, sender);
         chatEvent.fire(event); // Event auslösen
+        chatLogger.logMessage(event);
     }
 
 }
