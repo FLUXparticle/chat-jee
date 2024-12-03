@@ -5,6 +5,15 @@
 <h:head>
     <meta charset="UTF-8" />
     <title>Chat</title>
+    <script type="text/javascript">
+        function handleMessage(message) {
+            var chatLog = document.getElementById('chatForm:chatLog');
+            if (chatLog) {
+                chatLog.value += message + '\n';
+                chatLog.scrollTop = chatLog.scrollHeight;
+            }
+        }
+    </script>
 </h:head>
 <h:body>
     <h3>Chat</h3>
@@ -21,6 +30,9 @@
             <f:ajax execute="@form" render="message" />
         </h:commandButton>
     </h:form>
+
+    <!-- WebSocket für Push-Nachrichten -->
+    <f:websocket channel="chatChannel" onmessage="handleMessage" />
 
 </h:body>
 </html>
