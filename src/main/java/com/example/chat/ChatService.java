@@ -1,6 +1,7 @@
 package com.example.chat;
 
 import jakarta.enterprise.context.*;
+import jakarta.enterprise.event.*;
 import jakarta.inject.*;
 import org.slf4j.*;
 
@@ -13,7 +14,7 @@ public class ChatService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ChatService.class);
 
     @Inject
-    private ChatPushBean chatPushBean;
+    private Event<ChatMessageEvent> chatEvent;
 
     /**
      * Sendet eine Nachricht als Event und loggt sie.
@@ -23,7 +24,7 @@ public class ChatService {
      */
     public void sendMessage(String message, String sender) {
         ChatMessageEvent event = new ChatMessageEvent(message, sender);
-        chatPushBean.onChatMessage(event);
+        chatEvent.fire(event); // Event auslösen
     }
 
 }

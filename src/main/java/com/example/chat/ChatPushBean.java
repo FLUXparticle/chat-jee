@@ -1,6 +1,7 @@
 package com.example.chat;
 
 import jakarta.enterprise.context.*;
+import jakarta.enterprise.event.*;
 import jakarta.faces.push.*;
 import jakarta.inject.*;
 import org.slf4j.*;
@@ -14,7 +15,7 @@ public class ChatPushBean {
     @Push
     private PushContext chatChannel;
 
-    public void onChatMessage(ChatMessageEvent event) {
+    public void onChatMessage(@Observes ChatMessageEvent event) {
         String message = event.getMessage();
         LOGGER.info("Nachricht an Benutzer gesendet: {}", message);
         chatChannel.send(message);
